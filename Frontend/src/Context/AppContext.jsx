@@ -15,12 +15,11 @@ const navigate = useNavigate()
 
 const loadCreditData = async () =>{
     try {
-        const data = await axios.get('http://localhost:8000/api/user/credits',{headers:{token}})
-        console.log(typeof(data.data.credits))
-        console.log(typeof(data.data.user.name))
+        const backendURL = import.meta.env.VITE_API_BASE_URL;
+        const data = await axios.get(`${backendURL}/api/user/credits`,{headers:{token}})
         if(data){
             setCredit(data.data.credits)
-            setUser(data.data.user.name)
+            setUser(data.data.user)
         }
     } catch (error) {
         console.log(error)
@@ -31,7 +30,7 @@ const loadCreditData = async () =>{
 
 const generateImage = async (prompt) =>{
     try {
-        const {data} = await axios.post('http://localhost:8000/api/image/generate-image',{prompt},{headers:{token}})
+        const {data} = await axios.post(`${backendURL}/api/image/generate-image`,{prompt},{headers:{token}})
         if(data){
             loadCreditData()
             return data.resultImage

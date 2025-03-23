@@ -15,8 +15,9 @@ const Login = () => {
     const onSubmitHandler = async (e) =>{
         e.preventDefault();
         try {
+            const backendURL = import.meta.env.VITE_API_BASE_URL;
             if(state==='Login'){
-               const {data} =  await axios.post('http://localhost:8000/api/user/login'  ,{email,password})
+               const {data} =  await axios.post(`${backendURL}/api/user/login`  ,{email,password})
                if(data.success){
                 setToken(data.token)
                 setUser(data.user)
@@ -28,7 +29,7 @@ const Login = () => {
                }
             }
             else{
-                const {data} =  await axios.post('http://localhost:8000/api/user/register'  ,{name,email,password})
+                const {data} =  await axios.post(`${backendURL}/api/user/register`  ,{name,email,password})
                if(data.success){
                 setToken(data.token)
                 setUser(data.user)
